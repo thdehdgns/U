@@ -12,8 +12,14 @@ public class PlayerCam : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+       
         // transform = 카메라, 벡터의 합, 빼기  ->   A - B :   B에서 출발해서 A까지 이동하는 화살표 
         offset = transform.position  - playerTransform.position;
+    }
+
+    public void SetOffset()
+    {
+        offset = transform.position - playerTransform.position;
     }
 
     // 플레이어의 Update 움직인 직 후, 카메라가 따라서 움직인다.
@@ -35,7 +41,11 @@ public class PlayerCam : MonoBehaviour
     
     void CameraPos()
     {
-        if(playerTransform.position.y >= 21)
+        if(playerTransform.position.y >= 32)
+        {
+            fixedYPosition = 32;
+        }
+        else if(playerTransform.position.y >= 21)
         {
             fixedYPosition = 21;
         }

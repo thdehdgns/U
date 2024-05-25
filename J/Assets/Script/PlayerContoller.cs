@@ -10,7 +10,7 @@ public class PlayerContllor : MonoBehaviour
     public float MoveSpeed = 7; //이동속도
     public float JumpForce = 10; //점프력
     private float MoveInput;    //캐릭터 방향 
-    public Transform startTransform;
+    //public Transform startTransform;
     public Rigidbody2D rigidbody2D; //물리 기능을 제어하는 컴포넌트
 
     [Header("점프")]
@@ -29,12 +29,12 @@ public class PlayerContllor : MonoBehaviour
     void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
-        transform.position = startTransform.position;
+        //transform.position = startTransform.position;
     }
 
     void InitalizePlayerStatus()
     {
-        transform.position = startTransform.position;
+        ///transform.position = startTransform.position;
         rigidbody2D.velocity = Vector2.zero;
         facingRight = true;
         spriteRenderer.flipX = false;
@@ -48,7 +48,7 @@ public class PlayerContllor : MonoBehaviour
         HandleInput();
         HandleFlip();
         Move();
-        FallDownCheck();
+        //FallDownCheck();
     }
 
     private void FallDownCheck()

@@ -11,8 +11,8 @@ public class GasRoom : MonoBehaviour
 
     public float checkTime = 2f;
     private float Timer = 0f;
-    
 
+    public GameObject goalobject;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -20,6 +20,7 @@ public class GasRoom : MonoBehaviour
         {
             GasState = true;
             Debug.Log("현재 상태를 출력" + GasState);
+            goalobject.SetActive(true);
         }
     }
 
@@ -29,6 +30,7 @@ public class GasRoom : MonoBehaviour
         {
             GasState = false;
             Debug.Log("현재 상태를 출력" + GasState);
+            goalobject.SetActive(false);
         }
     }
     private void OnTriggerStay2D(Collider2D collision)

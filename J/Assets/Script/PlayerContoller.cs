@@ -8,6 +8,7 @@ public class PlayerContllor : MonoBehaviour
 {
     [Header("이동")]
     public float MoveSpeed = 7; //이동속도
+    public float DashSpeed = 17;
     public float JumpForce = 10; //점프력
     private float MoveInput;    //캐릭터 방향 
     //public Transform startTransform;
@@ -47,6 +48,7 @@ public class PlayerContllor : MonoBehaviour
         CollisionCheck();
         HandleInput();
         HandleFlip();
+        Dash();
         Move();
         //FallDownCheck();
     }
@@ -125,6 +127,7 @@ public class PlayerContllor : MonoBehaviour
 
     private void Move()
     {
+        
         rigidbody2D.velocity = new Vector2(MoveSpeed * MoveInput, rigidbody2D.velocity.y);
     }
 
@@ -132,5 +135,18 @@ public class PlayerContllor : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - groundDistance));
+    }
+
+
+    private void Dash()
+    {
+        if(Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            MoveSpeed = DashSpeed;
+        }
+        else if(Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            MoveSpeed = 7;
+        }
     }
 }

@@ -27,6 +27,8 @@ public class PlayerContllor : MonoBehaviour
     public Animator animator;
     private bool isMove;
 
+    [SerializeField] ParticleContoller particleContoller;
+
     void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
@@ -78,12 +80,19 @@ public class PlayerContllor : MonoBehaviour
     private void CollisionCheck()
     {
         isGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundDistance, groundLayer);
+        particleContoller.isGround = isGrounded;
     }
     /// <summary>
     /// 움직임, 점프
     /// </summary>
     private void HandleInput()
     {
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            particleContoller.PlayParticle();
+        }
+
+
         MoveInput = Input.GetAxis("Horizontal");
         JumpButton();
     }

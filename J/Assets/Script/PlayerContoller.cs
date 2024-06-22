@@ -1,4 +1,4 @@
-using System;
+    using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -120,6 +120,7 @@ public class PlayerContllor : MonoBehaviour
 
     private void Jump()
     {
+        AudioManager.instance.PlaySFX(3);
         rigidbody2D.velocity = new Vector2(rigidbody2D.position.x, JumpForce);
     }
 

@@ -1,4 +1,4 @@
-    using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -29,6 +29,8 @@ public class PlayerContllor : MonoBehaviour
 
     [SerializeField] ParticleContoller particleContoller;
 
+    public bool DashG = false;
+
     void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
@@ -42,7 +44,7 @@ public class PlayerContllor : MonoBehaviour
         facingRight = true;
         spriteRenderer.flipX = false;
     }
-
+    
 
     void Update()
     {
@@ -120,7 +122,7 @@ public class PlayerContllor : MonoBehaviour
 
     private void Jump()
     {
-        AudioManager.instance.PlaySFX(3);
+        //AudioManager.instance.PlaySFX(3); 오디오가 없고, 들을 수 없음;; 나중에 바꿔야함
         rigidbody2D.velocity = new Vector2(rigidbody2D.position.x, JumpForce);
     }
 
@@ -147,16 +149,24 @@ public class PlayerContllor : MonoBehaviour
         Gizmos.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - groundDistance));
     }
 
-
-    private void Dash()
+    private void InputShift()
     {
-        if(Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            MoveSpeed = DashSpeed;
+            Dash();
         }
-        else if(Input.GetKeyUp(KeyCode.LeftShift))
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             MoveSpeed = 7;
         }
+    }
+
+    private void Dash()
+    {
+        if(DashG == true)
+        {
+             MoveSpeed = DashSpeed;
+        }
+        
     }
 }

@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Study/Trap Scene.unity
     guid: e64522b70d60a064286edd8987df4908
+  - enabled: 1
+    path: Assets/Scenes/Main/Main2.unity
+    guid: e9fd85521a3095c45843349893be8f49
   m_configObjects: {}

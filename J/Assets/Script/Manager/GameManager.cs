@@ -51,13 +51,13 @@ public class GameManager : MonoBehaviour
 
         switch (difficulty)
         {
-            case 0:
+            case 1:
                 name = "이지";
                 break;
-            case 1:
+            case 2:
                 name = "노말";
                 break;
-            case 2:
+            case 3:
                 name = "하드";
                 break;
             default:

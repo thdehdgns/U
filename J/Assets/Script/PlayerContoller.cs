@@ -122,8 +122,13 @@ public class PlayerContllor : MonoBehaviour
 
     private void Jump()
     {
-        //AudioManager.instance.PlaySFX(3); 오디오가 없고, 들을 수 없음;; 나중에 바꿔야함
         rigidbody2D.velocity = new Vector2(rigidbody2D.position.x, JumpForce);
+        if(AudioManager.instance == null)
+        {
+            Debug.LogWarning($"{nameof(AudioManager)}에 instance가 없습니다.");
+            return;
+        }
+        AudioManager.instance.PlaySFX(3); 
     }
 
     private void JumpButton()
@@ -149,23 +154,17 @@ public class PlayerContllor : MonoBehaviour
         Gizmos.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - groundDistance));
     }
 
-    private void InputShift()
+   
+
+    private void Dash()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            Dash();
+            MoveSpeed = DashSpeed;
         }
         else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             MoveSpeed = 7;
-        }
-    }
-
-    private void Dash()
-    {
-        if(DashG == true)
-        {
-             MoveSpeed = DashSpeed;
         }
         
     }

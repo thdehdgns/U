@@ -9,6 +9,7 @@ public class MainMenu_Ui : MonoBehaviour
 {
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI Bestscore;
+
     public TextMeshProUGUI curretScoreText;
     
 
@@ -20,9 +21,11 @@ public class MainMenu_Ui : MonoBehaviour
         
     }
 
+    
+
     public void StartNewGame()
     {
-        SceneManager.LoadScene(1); // 2번째 위치에 잇는 씬을 로드한다.
+        SceneManager.LoadScene(2); // 2번째 위치에 잇는 씬을 로드한다.
                                    // 배열은 0번째... 배열에 1에 해당하는 씬을 로드해라.
     }
 

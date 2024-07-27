@@ -25,7 +25,20 @@ public class Enemy : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            MainContollor.instance.GameOverUI();
+
+            PlayerContllor player = collision.gameObject.GetComponent<PlayerContllor>();
+
+            player.currentHp = player.currentHp - GameManager.instance.difficulty - 1; //난이도 만큼 체력이 깎임 
+            
+            if(player.currentHp <= 0)
+            {
+                MainContollor.instance.GameOverUI();
+            }
+             
+            
+            
+
+
             MainContollor.instance.bestscore();
 
         }

@@ -13,8 +13,10 @@ public class MainContollor : MonoBehaviour
     public static MainContollor instance;
     public GameObject GameOver;
     public GameObject GameScore;
+    public PlayerContllor playercon;
     public float score;
 
+    
     
 
     private void Awake()
@@ -28,24 +30,27 @@ public class MainContollor : MonoBehaviour
     private void SLevel()
     {
         string name = null;
-
+        if(GameManager.instance.difficulty == 0 && GameManager.instance.difficulty == null)
+        {
+            GameManager.instance.difficulty = 1;
+        }
         switch (GameManager.instance.difficulty)
         {
             case 1:
-                name = "이지";
+                name = "Esey";
                 break;
             case 2:
-                name = "노말";
+                name = "Nomal";
                 break;
             case 3:
-                name = "하드";
+                name = "Hard";
                 break;
             default:
                 name = $"키 : {GameManager.instance.difficulty} 존재하지 않는 키 값입니다.";
                 break;
         }
 
-        Level.text = $"현재 난이도는: {name}입니다.";
+        Level.text = $"{name}";
     }
 
     public void Scorestart()
@@ -91,6 +96,7 @@ public class MainContollor : MonoBehaviour
 
     public void Retry()
     {
+        playercon.currentHp = playercon.MaxHp;
         GameOver.SetActive(false);
         GameScore.SetActive(true);
         score = 0;

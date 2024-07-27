@@ -31,6 +31,15 @@ public class PlayerContllor : MonoBehaviour
 
     public bool DashG = false;
 
+    [Header("Hp")]
+    public int currentHp = 1;
+    public int MaxHp = 5;
+
+    private void Awake()
+    {
+        currentHp = MaxHp;
+    }
+
     void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();

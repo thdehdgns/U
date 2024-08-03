@@ -15,12 +15,16 @@ public class MainContollor : MonoBehaviour
     public GameObject GameScore;
     public PlayerContllor playercon;
     public float score;
-
-    
+    public bool Istime = true;
+    public Pattern pattern;
+    public Pattern2 pattern2;
+    public PatternContoller patternContoller;
+    public StartGame startgame;
     
 
     private void Awake()
     {
+        
         if(instance == null)
         {
             instance = this;
@@ -37,7 +41,7 @@ public class MainContollor : MonoBehaviour
         switch (GameManager.instance.difficulty)
         {
             case 1:
-                name = "Esey";
+                name = "Easy";
                 break;
             case 2:
                 name = "Nomal";
@@ -60,11 +64,14 @@ public class MainContollor : MonoBehaviour
 
     private void Update()
     {
-        SLevel();
-        Scorestart();
-        Score.text = score.ToString();
-        BestScore.text = $"최고점수 {PlayerPrefs.GetFloat(GameData.BestScore2)}";
-        bestScoreReset();
+        if(startgame.GamesStaring == true)
+        {
+            SLevel();
+            Scorestart();
+            Score.text = score.ToString();
+            BestScore.text = $"최고점수 {PlayerPrefs.GetFloat(GameData.BestScore2)}";
+            bestScoreReset();
+        }
     }
 
     
@@ -86,16 +93,21 @@ public class MainContollor : MonoBehaviour
     public void LoadMainMenu()
     {
         SceneManager.LoadScene(0);
+        Istime = true;
+        Time.timeScale = 1.0f;
     }
 
     public void GameOverUI()
     {
+        
         GameOver.SetActive(true);
         GameScore.SetActive(false);
+        Time.timeScale = 0f;
     }
 
     public void Retry()
     {
+        Time.timeScale = 1.0f;
         playercon.currentHp = playercon.MaxHp;
         GameOver.SetActive(false);
         GameScore.SetActive(true);

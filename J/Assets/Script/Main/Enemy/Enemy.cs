@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     BoxCollider2D boxCollider2d;
     Rigidbody2D rigidbody2d;
     SpriteRenderer spriteRenderer;
+    public bool starting = true;
 
     void LoadComponents()
     {
@@ -20,7 +21,10 @@ public class Enemy : MonoBehaviour
     {
         LoadComponents();
     }
+
+
     
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))

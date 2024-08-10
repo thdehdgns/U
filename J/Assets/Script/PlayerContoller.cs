@@ -14,6 +14,8 @@ public class PlayerContllor : MonoBehaviour
     //public Transform startTransform;
     public Rigidbody2D rigidbody2D; //물리 기능을 제어하는 컴포넌트
 
+    public Transform transform;
+
     [Header("점프")]
     public bool isGrounded; //true = can jump, flase = can't jump
     public float groundDistance = 1f;
@@ -26,17 +28,26 @@ public class PlayerContllor : MonoBehaviour
 
     public Animator animator;
     private bool isMove;
-
+    private bool isRoul;
     [SerializeField] ParticleContoller particleContoller;
 
     public bool DashG = false;
+    public CapsuleCollider2D capsuleCollider;
 
-    [Header("Hp")]
+    public float Maxcooldown = 0f;
+    public float cooldown = 2f;
+    public bool OnCooldown = false;
+
+    [Header("Hp 및 스테미나")]
     public int currentHp = 1;
     public int MaxHp = 5;
-
+    public float MaxStm = 30;
+    public float currentStm = 30;
+    public bool DashOn = false;
     private void Awake()
     {
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
+        transform = GetComponent<Transform>();
         currentHp = MaxHp;
     }
 
@@ -57,12 +68,15 @@ public class PlayerContllor : MonoBehaviour
 
     void Update()
     {
+        IscoolDown();
+        asdf();
         HandleAnimation();
         CollisionCheck();
         HandleInput();
         HandleFlip();
         Dash();
         Move();
+        OnDash();
         //FallDownCheck();
     }
 
@@ -151,6 +165,62 @@ public class PlayerContllor : MonoBehaviour
         }
     }
 
+    private void IscoolDown()
+    {
+        if(OnCooldown == true)
+        {
+            if(cooldown >= 0) 
+            { 
+
+                cooldown -= Time.deltaTime;
+            }
+            else if(cooldown <= 0)
+            {
+                cooldown = 2;
+                OnCooldown = false;
+            }
+        }
+    }
+
+    private void asdf()
+    {
+        if (OnCooldown == false)
+        { 
+            if (currentStm >= 10)
+            {
+                if (Input.GetKeyDown(KeyCode.C))
+                {
+                    Roul();
+                    OnCooldown = true;
+                }
+            }
+        }
+    }
+
+    private void Roul()
+    {
+        StartCoroutine(asf());
+        
+        StopCoroutine(asf());
+    }
+
+    IEnumerator asf()
+    {
+        currentStm -= 10;
+        isRoul = true;
+        animator.SetBool("IsRoul", isRoul);
+        gameObject.tag = "Untagged";
+        for(int i = 0; i < 6; i++)
+        {
+            yield return new WaitForSeconds(0.05f);
+            transform.position = new Vector2(transform.position.x + (1 * facingDriection), transform.position.y);
+        }
+        gameObject.tag = "Player";
+        isRoul = false;
+        animator.SetBool("IsRoul", isRoul);
+    }
+
+
     private void Move()
     {
         
@@ -164,17 +234,50 @@ public class PlayerContllor : MonoBehaviour
     }
 
    
+    private void OnDash()
+    {
+        if(DashOn == true)
+        {
+
+            currentStm = currentStm - (Time.deltaTime*3);
+            
+        }
+        else if(DashOn == false)
+        {
+            if(currentStm <= MaxStm)
+            {
+                currentStm += Time.deltaTime;
+            }
+            else if(currentStm >= MaxStm)
+            {
+                Debug.Log("스태미가 가득 차 있습니다!");
+            }
+        }
+    }
 
     private void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if(currentStm >= 3)
         {
-            MoveSpeed = DashSpeed;
+            if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+            {
+                MoveSpeed = DashSpeed;
+                DashOn = true;
+            }
+            else if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift))
+            {
+                MoveSpeed = 7;
+                DashOn = false;
+            }
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        else if(currentStm < 0)
         {
+            Debug.Log("스테미나가 부족합니다!.");
+            DashOn = false;
             MoveSpeed = 7;
         }
         
+        
+
     }
 }

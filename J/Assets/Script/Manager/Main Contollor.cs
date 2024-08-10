@@ -70,7 +70,11 @@ public class MainContollor : MonoBehaviour
             Scorestart();
             Score.text = score.ToString();
             BestScore.text = $"최고점수 {PlayerPrefs.GetFloat(GameData.BestScore2)}";
-            bestScoreReset();
+            //bestScoreReset();
+        }
+        if(GameManager.instance.difficulty >= 4 || GameManager.instance.difficulty <= 0)
+        {
+            GameManager.instance.difficulty = 1;
         }
     }
 
@@ -112,6 +116,7 @@ public class MainContollor : MonoBehaviour
         GameOver.SetActive(false);
         GameScore.SetActive(true);
         score = 0;
+        playercon.currentStm = 30;
     }
 
     public void gamequit()

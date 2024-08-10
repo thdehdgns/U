@@ -13,7 +13,8 @@ public class Goal : MonoBehaviour
 
             goalobject.SetActive(true);
             //TMP_Text goalText = goalobject.GetComponent<TMP_Text>();
-            //goalText.text = "게임 클리어!";   
+            //goalText.text = "게임 클리어!";
+            Time.timeScale = 0f;
         }
     }
 

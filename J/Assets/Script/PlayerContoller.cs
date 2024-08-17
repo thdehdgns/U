@@ -35,7 +35,7 @@ public class PlayerContllor : MonoBehaviour
     public CapsuleCollider2D capsuleCollider;
 
     public float Maxcooldown = 0f;
-    public float cooldown = 2f;
+    public float cooldown = 2f; //구르기 쿨타임
     public bool OnCooldown = false;
 
     [Header("Hp 및 스테미나")]

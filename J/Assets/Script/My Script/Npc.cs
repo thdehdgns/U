@@ -53,16 +53,29 @@ public class Npc : MonoBehaviour
     
     public void CloseShop()
     {
+
         ShopCanvers.SetActive(false);
     }
     
+    public void closeShopEsc()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ShopCanvers.SetActive(false);
+        }
+    }
 
     private void Update()
     {
-
+        closeShopEsc();
         text();
         textInputKey();
-        if (index > NpcTall.Length -1)
+        asdf();
+    }
+
+    private void asdf()
+    {
+        if (index > NpcTall.Length - 1)
         {
             index = 0;
             NpcCanvers.SetActive(false);
@@ -74,6 +87,7 @@ public class Npc : MonoBehaviour
             NpcText.text = NpcTall[index];
         }
     }
+
 
     public void NpcCanversFlase()
     {

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class AppleTree : MonoBehaviour
@@ -8,11 +9,17 @@ public class AppleTree : MonoBehaviour
     public float curruntCool = 150;
     public bool OnApple = false;
     public bool IngApple = false;
-    public bool OnSeed = true;
+    public bool water = true;
     private int thisitemid;
+    public TextMeshPro AppleText;
+    public GameObject Apple;
+    public GameObject AppleMassage;
     public InventoryManager inventoryManager;
     public ItemManager itemManager;
     private bool OntrigerValue = false;
+    private float time;
+    private bool Ontime;
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -38,7 +45,7 @@ public class AppleTree : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if (OnSeed == true) //씨앗이 있을 때
+                if (water == true) //물이 있을 때
                 {
                     if (OnApple == true)
                     {
@@ -46,19 +53,25 @@ public class AppleTree : MonoBehaviour
                     }
                     else
                     {
-                        if (IngApple == false)  //씨앗이 있고 사과가 자라고있지 않을때
+                        if (IngApple == false)  //물이 있고 사과가 자라고있지 않을때
                         {
                             IngApple = true;
                             Debug.Log("씨앗 효과발동");
+                            //씨앗 갯수 줄이기
 
                         }
-                        else //씨앗은 있지만 이미 사과가 자라고있을 때
+                        else //물이 있지만 이미 사과가 자라고있을 때
                         {
+                            AppleMassage.SetActive(true);
+                            Ontime = true;
+                            time = 3;
+                            AppleText.text = $"사과가 자라고있습니다!\n{curruntCool.ToString("F0")}초 남음!";
                             Debug.Log("사과가 자라고있습니다.");
+                            
                         }
                     }
                 }
-                else if (OnSeed == false || IngApple == true) //씨앗이 없거나 씨앗은 없는데 사과가 자라고있을 때
+                else if (water == false || IngApple == true) //물 없거나 씨앗은 없는데 사과가 자라고있을 때
                 {
                     if (OnApple == true)
                     {
@@ -76,9 +89,29 @@ public class AppleTree : MonoBehaviour
             
     }
     
+    private void timer()
+    {
+        if(Ontime == true)
+        {
+            
+            time -= Time.deltaTime;
+            if(time <= 0)
+            {
+                Ontime = false;
+                AppleMassage.SetActive(false);
+            }
+        }
+    }
+
+
+    private void appleSprite()
+    {
+        Apple.SetActive(true);
+    }
 
     public void Update()
     {
+        timer();
         InPalyer();
         CooldwonApple();
     }
@@ -90,6 +123,7 @@ public class AppleTree : MonoBehaviour
             thisitemid = itemManager.items[2].itemId;
             inventoryManager.AddItem(thisitemid, itemManager.items[2]);
             OnApple = false;
+            Apple.SetActive(false);
         }
         else
         {
@@ -107,6 +141,7 @@ public class AppleTree : MonoBehaviour
                 curruntCool = Maxcooldwon;
                 IngApple = false;
                 OnApple = true;
+                appleSprite();
             }
             else
             {

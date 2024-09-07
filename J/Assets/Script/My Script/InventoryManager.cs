@@ -39,7 +39,8 @@ public class InventoryManager : MonoBehaviour
             else if (itemComponents[i].itemid == 0)
             {
                 itemComponents[i].item = item;
-                itemComponents[i].itemid = item.itemId; 
+                itemComponents[i].itemid = item.itemId;
+                itemComponents[i].itemvalue++;
                 return;
             }
         }

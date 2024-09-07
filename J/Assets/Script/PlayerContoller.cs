@@ -250,7 +250,7 @@ public class PlayerContllor : MonoBehaviour
             }
             else if(currentStm >= MaxStm)
             {
-                Debug.Log("스태미가 가득 차 있습니다!");
+                //Debug.Log("스태미가 가득 차 있습니다!");
             }
         }
     }
